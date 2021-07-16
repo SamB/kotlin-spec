@@ -1,8 +1,12 @@
 package org.jetbrains.kotlin.spec.loader
 
-import js.externals.jquery.JQueryAjaxSettings
-import js.externals.jquery.JQueryXHR
-import js.externals.jquery.`$`
+import io.kvision.jquery.JQueryAjaxSettings
+import io.kvision.jquery.JQueryXHR
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonConfiguration
 import org.jetbrains.kotlin.spec.entity.TestsLoadingInfo
@@ -12,7 +16,7 @@ import org.jetbrains.kotlin.spec.entity.test.TestPlace
 import org.jetbrains.kotlin.spec.entity.test.parameters.TestInfo
 import org.jetbrains.kotlin.spec.entity.test.parameters.testArea.TestArea
 import org.jetbrains.kotlin.spec.utils.format
-import kotlin.browser.window
+import kotlinx.browser.window
 import kotlin.js.Promise
 
 interface GithubTestsLoader {

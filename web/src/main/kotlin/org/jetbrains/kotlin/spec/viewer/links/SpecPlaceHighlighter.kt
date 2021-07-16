@@ -1,11 +1,15 @@
 package org.jetbrains.kotlin.spec.viewer.links
 
-import js.externals.jquery.JQuery
-import js.externals.jquery.`$`
+import io.kvision.jquery.JQuery
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.loader.SpecTestsLoader
 import org.jetbrains.kotlin.spec.utils.*
 import org.w3c.dom.HTMLElement
-import kotlin.browser.window
+import kotlinx.browser.window
 
 data class SpecPlaceComponents(
         val sectionId: String,

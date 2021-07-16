@@ -1,7 +1,11 @@
 package org.jetbrains.kotlin.spec.viewer
 
-import js.externals.jquery.JQuery
-import js.externals.jquery.`$`
+import io.kvision.jquery.JQuery
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.entity.SpecParagraph
 import org.jetbrains.kotlin.spec.entity.SpecSection
 import org.jetbrains.kotlin.spec.entity.SpecSentence

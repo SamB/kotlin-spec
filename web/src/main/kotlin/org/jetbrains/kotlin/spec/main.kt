@@ -1,6 +1,10 @@
 package org.jetbrains.kotlin.spec
 
-import js.externals.jquery.`$`
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.loader.SpecTestsLoader
 import org.jetbrains.kotlin.spec.utils.*
 import org.jetbrains.kotlin.spec.viewer.Header
@@ -10,8 +14,8 @@ import org.jetbrains.kotlin.spec.viewer.SpecTestsViewer
 import org.jetbrains.kotlin.spec.viewer.links.SentenceFinder
 import org.jetbrains.kotlin.spec.viewer.links.SpecPlaceHighlighter
 import org.w3c.dom.set
-import kotlin.browser.document
-import kotlin.browser.window
+import kotlinx.browser.document
+import kotlinx.browser.window
 
 fun turnOnPermanentDevModeIfNeeded() {
     if (window.location.searchMap["mode"] == "dev") {

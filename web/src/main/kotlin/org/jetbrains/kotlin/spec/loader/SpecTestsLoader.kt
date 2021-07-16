@@ -1,7 +1,11 @@
 package org.jetbrains.kotlin.spec.loader
 
-import js.externals.jquery.JQuery
-import js.externals.jquery.`$`
+import io.kvision.jquery.JQuery
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.entity.TestsLoadingInfo
 import org.jetbrains.kotlin.spec.entity.SpecSection
 import org.jetbrains.kotlin.spec.entity.test.parameters.testArea.TestArea
@@ -9,7 +13,7 @@ import org.jetbrains.kotlin.spec.utils.format
 import org.jetbrains.kotlin.spec.utils.isDevMode
 import org.jetbrains.kotlin.spec.viewer.MarkUpArranger
 import org.jetbrains.kotlin.spec.viewer.SpecCoverageHighlighter
-import kotlin.browser.window
+import kotlinx.browser.window
 import kotlin.js.Promise
 
 class SpecTestsLoader {

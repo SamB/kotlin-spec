@@ -1,7 +1,11 @@
 package org.jetbrains.kotlin.spec.viewer
 
-import js.externals.jquery.JQuery
-import js.externals.jquery.`$`
+import io.kvision.jquery.JQuery
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.entity.SpecSentence
 import org.jetbrains.kotlin.spec.entity.test.SpecTest
 import org.jetbrains.kotlin.spec.entity.test.TestCase
@@ -16,9 +20,13 @@ import org.jetbrains.kotlin.spec.utils.format
 import kotlin.js.Promise
 import kotlin.js.json
 
-external fun require(module: String): dynamic
+external fun require(module: dynamic, cb: (dynamic) -> Unit): dynamic
 
-val KotlinPlayground = require("kotlin-playground")
+var KotlinPlayground: dynamic = null
+
+private val initKotlinPlayground = require(arrayOf("kotlin-playground")) {
+    KotlinPlayground = it
+}
 
 enum class NavigationType { PREV, NEXT }
 

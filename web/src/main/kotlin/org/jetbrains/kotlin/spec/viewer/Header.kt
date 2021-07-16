@@ -1,6 +1,10 @@
 package org.jetbrains.kotlin.spec.viewer
 
-import js.externals.jquery.`$`
+import io.kvision.jquery.`$`
+import io.kvision.jquery.invoke
+import io.kvision.jquery.get
+import io.kvision.jquery.set
+
 import org.jetbrains.kotlin.spec.utils.format
 import org.jetbrains.kotlin.spec.utils.isDevMode
 import org.jetbrains.kotlin.spec.utils.shouldBeShowedMarkup

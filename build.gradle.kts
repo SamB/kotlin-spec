@@ -1,28 +1,48 @@
 import at.phatbl.shellexec.ShellExec
 
 plugins {
+    id("org.jetbrains.kotlin.jvm") version "1.4.31" apply false
     id("at.phatbl.shellexec") version "1.1.3"
 }
 
-val htmlBuildDir = "$buildDir/spec/html"
-val pdfBuildDir = "$buildDir/spec/pdf"
-val resourcesBuildDir = "$htmlBuildDir/resources"
-val jsBuildDir = "$resourcesBuildDir/js"
+val htmlSourceDir = "$projectDir/docs/build/spec/html"
+val htmlTargetDir = "$buildDir/spec/html"
+
+val pdfSourceDir = "$projectDir/docs/build/spec/pdf"
+val pdfTargetDir = "$buildDir/spec/pdf"
+
+val resourcesSourceDir = "$projectDir/web/resources"
+val resourcesTargetDir = "$htmlTargetDir/resources"
+
+val jsDistributionDir = "$projectDir/web/build/distributions"
+val jsTargetDir = "$resourcesTargetDir/js"
+
+val katexDistDir = "$buildDir/js/node_modules/katex/dist"
+val katexTargetDir = "$jsTargetDir/katex"
 
 tasks.create<Copy>("copyStatic") {
     group = "internal"
 
-    from("$projectDir/web/resources")
-    into(resourcesBuildDir)
+    from(resourcesSourceDir)
+    into(resourcesTargetDir)
 }
 
 tasks.create<Copy>("copyBuiltJs") {
     group = "internal"
 
-    mustRunAfter("web:webpack-bundle")
+    mustRunAfter("web:build")
 
-    from("$projectDir/web/build/js")
-    into(jsBuildDir)
+    from(jsDistributionDir)
+    into(jsTargetDir)
+}
+
+tasks.create<Copy>("copyKatex") {
+    group = "internal"
+
+    mustRunAfter("web:build")
+
+    from(katexDistDir)
+    into(katexTargetDir)
 }
 
 tasks.create<Copy>("copyHtml") {
@@ -30,8 +50,8 @@ tasks.create<Copy>("copyHtml") {
 
     mustRunAfter("docs:buildHtml", "docs:buildHtmlBySections")
 
-    from("$projectDir/docs/build/spec/html")
-    into(htmlBuildDir)
+    from(htmlSourceDir)
+    into(htmlTargetDir)
 }
 
 tasks.create<Copy>("copyPdf") {
@@ -39,8 +59,8 @@ tasks.create<Copy>("copyPdf") {
 
     mustRunAfter("docs:buildPdf", "docs:buildPdfBySections")
 
-    from("$projectDir/docs/build/spec/pdf")
-    into(pdfBuildDir)
+    from(pdfSourceDir)
+    into(pdfTargetDir)
 }
 
 tasks.create<Copy>("copyStubIndexToRedirectToIntroduction") {
@@ -48,19 +68,21 @@ tasks.create<Copy>("copyStubIndexToRedirectToIntroduction") {
 
     mustRunAfter("docs:buildPdf", "docs:buildPdfBySections")
 
-    from("$projectDir/web/resources/html")
-    into(htmlBuildDir)
+    from("$resourcesSourceDir/html")
+    into(htmlTargetDir)
 }
 
 tasks.create("buildJs") {
     group = "internal"
 
     dependsOn("copyStatic")
-    dependsOn("web:webpack-bundle")
     dependsOn("copyBuiltJs")
+    dependsOn("copyKatex")
+    dependsOn("web:build")
 
     doFirst {
-        File(jsBuildDir).mkdirs()
+        File(jsTargetDir).mkdirs()
+        File(katexTargetDir).mkdirs()
     }
 }
 
@@ -72,7 +94,7 @@ tasks.create("buildWeb") {
     dependsOn("copyHtml")
     dependsOn("buildJs")
 
-    finalizedBy("web:clean", "docs:clean")
+    // finalizedBy("web:clean", "docs:clean")
 }
 
 tasks.create("buildWebFullOnly") {
@@ -99,16 +121,7 @@ tasks.create("buildPdf") {
     dependsOn("docs:buildPdfBySections")
     dependsOn("copyPdf")
 
-    finalizedBy("web:clean", "docs:clean")
-}
-
-tasks.create<Delete>("clean") {
-    group = "build"
-
-    dependsOn("web:clean")
-    dependsOn("docs:clean")
-
-    delete("$projectDir/build")
+    // finalizedBy("web:clean", "docs:clean")
 }
 
 tasks.create<ShellExec>("syncGrammarWithKotlinGrammarApache2Repo") {

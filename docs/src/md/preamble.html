@@ -1,10 +1,14 @@
-<script type="text/javascript">
-    var require = {
-        baseUrl: "resources/js",
-        urlArgs : "v=3"
-    };
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js"
+        integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+
+<script>
+  require.config({
+    baseUrl: "resources/js"
+  });
+  require(["main"]);
 </script>
-<script data-main="main" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
 
 <link rel="Shortcut Icon" href="https://kotlinlang.org/assets/images/favicon.ico" type="image/x-icon"/>
 <link rel="apple-touch-icon" href="https://kotlinlang.org/assets/images/apple-touch-icon.png"/>
